@@ -1,0 +1,24 @@
+- name: Harden security
+  hosts: all
+  tasks:
+    - name: Set firewall rules
+      ufw:
+        rule: allow
+        name: "SSH"
+        port: 22
+        state: enabled
+
+    - name: Disable root login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+        backup: yes
+      notify:
+        - restart sshd
+
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted
