@@ -1,0 +1,13 @@
+- name: Manage users and SSH keys
+  hosts: all
+  tasks:
+    - name: Add new user
+      user:
+        name: johndoe
+        state: present
+        password: "{{ 'secure_password' | password_hash('sha512') }}"
+        groups: sudo
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa_johndoe
+        ssh_key_comment: johndoe@{{ ansible_fqdn }}
