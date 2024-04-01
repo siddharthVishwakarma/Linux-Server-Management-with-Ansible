@@ -1,0 +1,13 @@
+- name: Manage services
+  hosts: all
+  tasks:
+    - name: Start service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Restart service
+      service:
+        name: apache2
+        state: restarted
