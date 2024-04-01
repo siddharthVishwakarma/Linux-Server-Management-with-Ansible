@@ -1,0 +1,21 @@
+- name: Manage filesystem
+  hosts: all
+  tasks:
+    - name: Ensure /data directory exists
+      file:
+        path: /data
+        state: directory
+        mode: '0755'
+
+    - name: Copy config file
+      copy:
+        src: files/config.ini
+        dest: /data/config.ini
+
+    - name: Set permissions for config file
+      file:
+        path: /data/config.ini
+        mode: '0644'
+
+    - name: Backup important file
+      command: cp /path/to/important_file /backup/important_file_backup
